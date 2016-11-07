@@ -34,9 +34,14 @@ class CalculationsController < ApplicationController
     @id_1=params[:id_1]
     @id_2=params[:id_2]
     @id_3=params[:id_3]
-    @id_number_1=@id_1.to_f
-    @id_number_2=@id_2.to_i
-    @id_number_3=@id_3.to_i
+    @rate=(@id_1.to_f/100)
+    @years=@id_2.to_i
+    @principal=@id_3.to_i
+    @monthly_payment = if (@rate/1200)==0
+      @principal/@years
+    else
+      (((@rate/1200)*@principal)*((1+(@rate/1200))**(@years*12)))/(((1+(@rate/1200))**(@years*12))-1)
+    end
 
     render("payments.html.erb")
 
